@@ -1,0 +1,6 @@
+(:name "multi-web-mode"
+       :description "Multi Web Mode is a minor mode which makes web editing in Emacs much easier"
+       :type git
+       :compile nil
+       :autoloads nil
+       :url "git://github.com/martialboniou/multi-web-mode")

@@ -1,0 +1,4 @@
+(:name "traverselisp"
+       :description "Walk through directories and perform actions on files."
+       :type http
+       :url "http://www.emacswiki.org/emacs/traverselisp.el")

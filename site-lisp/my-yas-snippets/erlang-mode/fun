@@ -1,0 +1,6 @@
+# -*- coding: utf-8; mode: snippet -*-
+# name: fun (...) -> ... end
+# key: fun
+# --
+${1:func} ($2) -> 
+    ${3:body}.

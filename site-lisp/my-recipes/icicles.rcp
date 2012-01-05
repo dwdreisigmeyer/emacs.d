@@ -1,0 +1,6 @@
+(:name icicles
+	:type emacsmirror
+	:description "Minibuffer input completion and cycling of completion candidates."
+	:compile nil
+	:autoloads nil
+	:load "icicles.el")
