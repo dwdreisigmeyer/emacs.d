@@ -9,7 +9,6 @@
 (require 'flymake-csslint)
 (require 'flymake-cursor)
 (require 'flymake-jshint)
-(require 'flymake-html-validator)
 (require 'js-beautify)
 (require 'my-yas-funs)
 
@@ -26,7 +25,8 @@
 	(hs-minor-mode 1)
 	(autopair-mode 1)
 	(add-to-list 'ac-modes 'erlang-mode)
-	(yas/minor-mode-on))
+	(yas/minor-mode-on)
+	(add-to-list 'ac-sources 'ac-new-yas-source))
 
 (defun html-hooks ()
 	(imenu-add-menubar-index)
@@ -35,8 +35,9 @@
 	(hs-minor-mode 1)
 	(add-to-list 'ac-modes 'html-mode)
 	(auto-complete-mode 1)
-	(yas/minor-mode-on))
-		
+	(yas/minor-mode-on)
+	(add-to-list 'ac-sources 'ac-new-yas-source))
+			
 ; Installed uglify-js with npm.
 (defun uglify-js ()
   	(interactive)
@@ -66,6 +67,17 @@
 	(imenu-add-menubar-index)
 	(hs-minor-mode 1)
 	(paredit-mode 1))
+
+(defun php-hooks ()
+	(imenu-add-menubar-index)
+	(autopair-mode 1)
+	(hs-minor-mode 1)
+	(add-to-list 'ac-modes 'php-mode)
+	(auto-complete-mode 1)
+	(yas/minor-mode-on)
+	(add-to-list 'ac-sources 'ac-new-yas-source))
+
+;;;--------------------------
 
 (defun setup-css ()
 	(add-hook 'css-mode-hook 
@@ -109,12 +121,20 @@
 	(add-hook 'lisp-mode-hook 
 		(lambda ()
 			(lisp-hooks))))
+			
+(defun setup-php ()
+	(add-hook 'php-mode-hook 
+		(lambda () 
+			(php-hooks))))
+
+;;;--------------------------
 
 (defun setup-languages ()
 	(setup-css)
 	(setup-erlang)
 	(setup-html)
 	(setup-javascript)
-	(setup-lisp))
+	(setup-lisp)
+	(setup-php))
 	
 (provide 'language-hooks)

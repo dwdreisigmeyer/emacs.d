@@ -15,7 +15,7 @@
   (setq initial-scratch-message nil)
   (setq standard-indent 4)
   (fringe-mode 0)
-  (setq resize-mini-windows nil) ; needed to make some of the shell commands to display correctly
+  ;(setq resize-mini-windows nil) ; needed to make some of the shell commands to display correctly
   (color-theme-install
    '(layout-and-color
      ((background-color . "#272821")
