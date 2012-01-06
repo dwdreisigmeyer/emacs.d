@@ -11,9 +11,9 @@
 		(message "Canceled exit")))
 
 (defun do-when-opening ()
-	(if (y-or-n-p (format "Load a bookmark file? "))
+	(when (y-or-n-p (format "Load a bookmark file? "))
 		(my-bmkp-load))
-	(if (y-or-n-p (format "Load a workgroup? "))
+	(when (y-or-n-p (format "Load a workgroup? "))
 		(my-wg-load)))
 		
 (provide 'opening-closing-procedures)

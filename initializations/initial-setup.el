@@ -44,6 +44,7 @@
 		buffer-move
 		color-theme
 		distel ; my rcp
+		flymake-html-validator ; my rcp
 		idomenu ; my rcp
 		js-comint
 		paredit
