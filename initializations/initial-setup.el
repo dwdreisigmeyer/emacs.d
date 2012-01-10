@@ -43,9 +43,9 @@
 		autopair
 		buffer-move
 		color-theme
+		dired+
 		distel ; my rcp
 		flymake-html-validator ; my rcp
-		idomenu ; my rcp
 		js-comint
 		paredit
 		php-mode-improved
@@ -79,7 +79,6 @@
 	(setq bmkp-last-as-first-bookmark-file nil) ; This may be overwritten in .emacs -- check it.
 	(workgroups-mode 1)
 	(layout-and-color)
-	(setq imenu-sort-function 'imenu--sort-by-name)
 	(load-anything-sources))
 
 (defun setup-global-keys ()
@@ -89,15 +88,15 @@
 	(global-set-key (kbd "M-+")       	'hs-toggle-hiding)
 	(global-set-key (kbd "M-=")       	'hs-show-all)
 	(global-set-key (kbd "M--")       	'hs-hide-all)
-	(global-set-key (kbd "C-<") 		'idomenu)
 	(global-set-key (kbd "C-`") 		'my-wg-kill-and-load)
 	(global-set-key (kbd "RET") 		'newline-and-indent)
 	(global-set-key (kbd "C-c s")	 	'slime-selector)
+	(global-set-key (kbd "C-<")			'wg-create-workgroup)
+	(global-set-key (kbd "C-,")			'wg-switch-to-workgroup)
 	(global-set-key (kbd "M-S-<left>")  'windmove-left)
 	(global-set-key (kbd "M-S-<right>") 'windmove-right)
 	(global-set-key (kbd "M-S-<up>")    'windmove-up)
 	(global-set-key (kbd "M-S-<down>")  'windmove-down)
-	(global-set-key (kbd "C-,")     	'yas/insert-snippet)
 	(global-set-key (kbd "C->") 		'zencoding-expand-line))
 	
 
@@ -170,14 +169,14 @@
 	(setq special-display-function 'my-display-buffer-function))
 	
 	
-(defun setup-yas-ac-ido ()
+(defun setup-yas-ac-ido-imenu ()
 	(setq ac-comphist-file  "~/.emacs.d/ac-comphist.dat")
 	(define-key ac-complete-mode-map "\t" 'ac-complete)
 	(define-key ac-complete-mode-map "\r" nil)
 	(add-to-list 'ac-user-dictionary "~/.emacs.d/site-lisp/my-ac-dicts")
 	(setq yas/trigger-key "TAB")
 	(yas/load-directory "~/.emacs.d/site-lisp/my-yas-snippets")
-	(setq yas/prompt-functions '(yas/x-prompt))
+	(setq yas/prompt-functions '(yas/ido-prompt))
 	(ido-mode 1))
 	
 (defun initial-setup ()
@@ -189,7 +188,7 @@
 	(setup-elpa)
 	(setup-installed-packages)
 	(setup-global-keys)
-	(setup-yas-ac-ido)
+	(setup-yas-ac-ido-imenu)
 	(setup-slime))
 
 (provide 'initial-setup)
