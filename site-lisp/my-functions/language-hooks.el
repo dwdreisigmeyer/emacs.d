@@ -75,7 +75,8 @@
 	(add-to-list 'ac-modes 'php-mode)
 	(auto-complete-mode 1)
 	(yas/minor-mode-on)
-	(add-to-list 'ac-sources 'ac-new-yas-source))
+	(add-to-list 'ac-sources 'ac-new-yas-source)
+	(flymake-mode 1))
 
 ;;;--------------------------
 

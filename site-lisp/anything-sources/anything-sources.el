@@ -20,7 +20,7 @@
 			anything-c-source-etags-select
 			anything-c-source-extended-command-history
 			anything-c-source-files-in-current-dir+
-			anything-c-source-imenu
+			anything-c-source-locate
 			anything-c-source-traverse-occur
 			anything-c-source-yasnippet)))
 
