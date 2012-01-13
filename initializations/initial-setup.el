@@ -1,5 +1,6 @@
 (require 'comint)
 (require 'doc-view)
+(require 'yas-and-the-rest)
 
 (defvar my-workgroups-default-directory "~/.emacs.d/workgroups/")
 (defvar my-bookmarks-default-directory "~/.emacs.d/bookmarks/")
@@ -10,7 +11,7 @@
 
 (defun setup-comint ()
 	(define-key comint-mode-map (kbd "M-<up>")
-	'comint-previous-matching-input-from-input)
+		'comint-previous-matching-input-from-input)
 	(define-key comint-mode-map (kbd "M-<down>")
 		'comint-next-matching-input-from-input)
 	(define-key comint-mode-map (kbd "<up>")
@@ -32,62 +33,53 @@
 		 (eval-print-last-sexp))))
 	(add-to-list 'el-get-recipe-path "~/.emacs.d/site-lisp/my-recipes")
 	(setq my:el-get-packages
-	; This doesn't work for bookmark+
-	; I need to hand compile the fpllowing:
-	;	distel
-	;	multi-web-mode (remove eval-after-load line at top first)
 	 '(	el-get
 		ac-slime
 		anything
 		auto-complete
 		autopair
-		buffer-move
+		bookmark+ ; my rcp : need to compile by hand
 		color-theme
 		dired+
 		distel ; my rcp
+		flymake-csslint ; my rcp
+		flymake-cursor ; my rcp
 		flymake-html-validator ; my rcp
 		js-comint
+		lusty-explorer
 		paredit
-		php-mode-improved
-		yasnippet ; my rcp
+		php-mode ; this is my rcp - using https://github.com/ejmr/php-mode
+		; Comment out:
+		;	(wg-mode-line-add-display)
+		;	(wg-mode-line-remove-display)
+		; at the bottom of workgroups.el.  Recompile.
+		workgroups
+		yasnippet
 		zencoding-mode))
 	(el-get 'sync my:el-get-packages))
 	
 (defun setup-elpa ()
-	; Used this for the following packages:
-	;	bookmarks+
-	;	flymake-cursor
-	;	workgroups 
-	; this needs to be recompiled -- first remove the lines:
-	;	(wg-mode-line-add-display)
-	;	(wg-mode-line-remove-display)
-	; at the bottom of the file.
-	(add-to-list 'package-archives 
-		'("marmalade" . "http://marmalade-repo.org/packages/")))
-
+	(add-to-list 'load-path "~/.emacs.d/elpa")
+	(add-subdirs-to-load-path "~/.emacs.d/elpa/")
+	(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/")))
 	
 (defun setup-installed-packages ()
-	; Comment out:
-	;	(wg-mode-line-add-display)
-	;	(wg-mode-line-remove-display)
-	; at the bottom of workgroups.el.  Recompile.
 	(require 'anything-sources)
 	(require 'anything-config)
 	(require 'bookmark+)
-	(require 'layout-and-color)
-	(require 'workgroups)
 	(setq bmkp-last-as-first-bookmark-file nil) ; This may be overwritten in .emacs -- check it.
 	(workgroups-mode 1)
-	(layout-and-color)
-	(load-anything-sources))
+	;(load-anything-sources)
+	)
 
 (defun setup-global-keys ()
-	(global-set-key (kbd "C-.")			'anything)
-	(global-set-key (kbd "C-c C-w")		'backward-kill-word)
+	; See anything-sources.el for other global keys
 	(global-set-key (kbd "C-x C-c") 	'do-before-closing)
 	(global-set-key (kbd "M-+")       	'hs-toggle-hiding)
 	(global-set-key (kbd "M-=")       	'hs-show-all)
 	(global-set-key (kbd "M--")       	'hs-hide-all)
+	(global-set-key (kbd "C-x C-b") 	'ibuffer)
+	(global-set-key (kbd "C-x C-f") 	'lusty-file-explorer)
 	(global-set-key (kbd "C-`") 		'my-wg-kill-and-load)
 	(global-set-key (kbd "RET") 		'newline-and-indent)
 	(global-set-key (kbd "C-c s")	 	'slime-selector)
@@ -107,11 +99,11 @@
 	(setq next-line-add-newlines nil)
 	(winner-mode 1)
 	(setq visible-bell 1)
-	(delete-selection-mode 1))
+	(delete-selection-mode 1)
+	(setq max-mini-window-height 1))
 
 (defun setup-paths ()
 	(add-subdirs-to-load-path "~/.emacs.d/site-lisp/")
-	(add-subdirs-to-load-path "~/.emacs.d/elpa/")
 	(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 	(add-subdirs-to-load-path "~/quicklisp/")
 	; With Homebrew you need to do (replace <VER> with, e.g., R14B04):
@@ -125,8 +117,7 @@
 	(add-to-list 'exec-path "/usr/local/bin") ; for csslint, jshint and jslint
 	; Look here: http://xahlee.blogspot.com/2009/08/difference-between-emacss-setenv-path.html
 	(setenv "PATH" (concat "/usr/local/texlive/2011/bin/x86_64-darwin:" "/usr/texbin:/usr/bin:" 
-							"/bin:" "/usr/sbin:" "/sbin:" "/usr/local/bin:" "/usr/X11/bin:" 
-							"/usr/texbin"))
+							"/bin:" "/usr/sbin:" "/sbin:" "/usr/local/bin:" "/usr/X11/bin:"))
 	(setq inferior-js-program-command "/usr/local/bin/node")
 	(setq inferior-lisp-program "/usr/local/bin/sbcl"))
 	
@@ -154,41 +145,26 @@
 (defun setup-windows ()
 	(setq pop-up-windows t)
 	(setq pop-up-frames nil)
-	(setq not-this-window t)
-	(defun my-display-buffer-function (buf not-this-window)
-		; This is for HTML / CSS / Javascript verifiers where we have one window.
-		(cond 
-			((string= (buffer-name buf) "*Shell Command Output*")
-				(delete-other-windows)
-				(split-window-vertically)
-				(switch-to-buffer buf)
-				; make the new window as small as possible
-				(shrink-window-if-larger-than-buffer)
-				(other-window -1))))
-	(setq special-display-buffer-names '("*Shell Command Output*"))
-	(setq special-display-function 'my-display-buffer-function))
+	(setq not-this-window t))
 	
 	
-(defun setup-yas-ac-ido-imenu ()
-	(setq ac-comphist-file  "~/.emacs.d/ac-comphist.dat")
-	(define-key ac-complete-mode-map "\t" 'ac-complete)
-	(define-key ac-complete-mode-map "\r" nil)
-	(add-to-list 'ac-user-dictionary "~/.emacs.d/site-lisp/my-ac-dicts")
-	(setq yas/trigger-key "TAB")
-	(yas/load-directory "~/.emacs.d/site-lisp/my-yas-snippets")
-	(setq yas/prompt-functions '(yas/ido-prompt))
-	(ido-mode 1))
+;;;--------------------------------
+	
 	
 (defun initial-setup ()
 	(setup-comint)
 	(setup-odds-and-ends)
 	(setup-windows)
 	(setup-paths) ; ** This must come before the following function calls. **
-	(setup-el-get)  
-	(setup-elpa)
+	(setup-el-get)
+	;(setup-elpa) ; I'm only using el-get
+	(require 'layout-and-color)
+	; Don't do the next call if emacs will be run in a terminal.
+	; Some lines in .emacs also need to be commented out.
+	(layout-and-color)
 	(setup-installed-packages)
 	(setup-global-keys)
-	(setup-yas-ac-ido-imenu)
+	(setup-yas-and-the-rest)
 	(setup-slime))
 
 (provide 'initial-setup)
