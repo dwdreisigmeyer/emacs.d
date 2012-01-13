@@ -1,9 +1,10 @@
 ;;;		.emacs
 ;;; 	4 JAN 2012
 
-; I put these here so they don't appear and then disappear.
+; These lines need to be commented out if emacs is in a terminal
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
+(fringe-mode 0)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INITIALIZATIONS
 (add-to-list 'load-path "~/.emacs.d/initializations")
