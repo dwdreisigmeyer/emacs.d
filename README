@@ -1,47 +1,64 @@
-Install el-get and marmalade.  
+*Install el-get.  This will need to be compiled because bookmark+ is not
+compiled and some changes need to be made in some other files (e.g., workspaces
+and yasnippet).
 
-Install these with elpa (using marmalade):
-
-bookmarks+
-flymake-csslint
-flymake-cursor
-flymake-jshint
-workgroups
-
-Create the following directories:
+*Create the following directories:
 
 ~/emacs.d/bookmarks
 ~/emacs.d/workgroups
 
-Need to install the following with npm:
+*Install the following with npm:
 
 csslint
+jshint
 jslint
+uglify-js
 
-Install Validator.nu:
+*Install Validator.nu:
 
 http://validator.w3.org/docs/install.html
 
-Install jsbeautifier:
+*Install jsbeautifier:
 
 http://jsbeautifier.org/python/jsbeautifier.py
 
-Needed to remove these line in workgroups.el and recompile:
+*Needed to remove these line in workgroups.el and recompile:
 
 (wg-mode-line-add-display)
 (wg-mode-line-remove-display)
 
-Needed to replace the following in anything-c-yasnippet.el:
+*Needed to replace the following in anything-c-yasnippet.el:
 
 yas/snippets/table-hash -> yas/table-hash
 yas/snippets/table-templates -> yas/table-templates
+
+I modify these lines:
+
+(defface dropdown-list-face
+  '((t :inherit default :background "lightyellow" :foreground "black"))
+  "*Bla." :group 'dropdown-list)
+
+(defface dropdown-list-selection-face
+  '((t :inherit dropdown-list-face :background "purple"))
+  "*Bla." :group 'dropdown-list)
+
+in yasnippet/dropdown-list.el to suit me.  I like this:
+
+(defface dropdown-list-face
+  '((t (:background "lightgray" :foreground "black")))
+  "*Bla." :group 'dropdown-list)
+
+(defface dropdown-list-selection-face
+  '((t (:background "steelblue" :foreground "white")))
+  "*Bla." :group 'dropdown-list)
+
+
 
 
 ----------
 
 (defun setup-global-keys ()
 	(global-set-key (kbd "C-.")			'anything)
-	(global-set-key (kbd "C-c C-w")		'backward-kill-word)
 	(global-set-key (kbd "C-x C-c") 	'do-before-closing)
 	(global-set-key (kbd "M-+")       	'hs-toggle-hiding)
 	(global-set-key (kbd "M-=")       	'hs-show-all)
