@@ -1,0 +1,4 @@
+(:name "anything-traverse"
+       :description "This is the sources and functions to use traverselisp.el with anything."
+       :type http
+       :url "http://www.emacswiki.org/emacs/anything-traverse.el")

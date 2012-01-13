@@ -9,8 +9,8 @@
 ;; Works best with the following:
 ;;		(define-key ac-complete-mode-map "\t" 'ac-complete)
 ;;		(define-key ac-complete-mode-map "\r" nil)
-;;		(setq yas/trigger-key "TAB")
-;;
+;; Then "\r" will be the yas trigger after "\t" is used to select an ac candidate.
+;; The yasnippet candidates are marked with a "y" in the candidate list.
 
 (require 'yasnippet)
 
@@ -32,6 +32,6 @@
 	'(	(init . init-yas-candidates)
 		(candidates . yas-candidates)
 		(action . yas/expand)
-		(symbol . "a")))
+		(symbol . "y")))
 
 (provide 'my-yas-funs)

@@ -6,7 +6,6 @@
 (defun layout-and-color ()
   (interactive)
   (global-linum-mode 0)
-  ;(setq-default mode-line-format nil)
   (setq-default cursor-type '(bar . 2))
   (blink-cursor-mode 1)
   (show-paren-mode 1)
@@ -14,8 +13,7 @@
   (global-hl-line-mode)
   (setq initial-scratch-message nil)
   (setq standard-indent 4)
-  (fringe-mode 0)
-  ;(setq resize-mini-windows nil) ; needed to make some of the shell commands to display correctly
+  (setq resize-mini-windows nil) ; needed to make some of the shell commands to display correctly
   (color-theme-install
    '(layout-and-color
      ((background-color . "#272821")
@@ -44,9 +42,10 @@
   )
 )
 
-; Header line format.  Mainly from here:
+; Header/Mode line format.  Mainly from here:
 ;	http://amitp.blogspot.com/2011/08/emacs-custom-mode-line.html
-(setq-default mode-line-format
+;(setq-default mode-line-format nil)
+(setq-default mode-line-format ;(setq-default header-line-format
 	'(	(:propertize "%4l:" face header-line-position-face)
 		(:eval (propertize "%3c" 'face
 			(if (>= (current-column) 80)

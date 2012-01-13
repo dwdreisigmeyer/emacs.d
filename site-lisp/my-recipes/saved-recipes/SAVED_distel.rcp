@@ -1,0 +1,10 @@
+(:name distel
+       :description "Distributed Emacs Lisp for Erlang."
+       :type emacsmirror
+       :build ("make clean && make erlc=/usr/local/bin/erlc 
+       				emacs=/Applications/Emacs.app/Contents/MacOS/Emacs")
+       :load-path ("elisp")
+       :after (lambda ()
+       		(require 'erlang-start)
+       		(require 'distel)
+			(distel-setup)))

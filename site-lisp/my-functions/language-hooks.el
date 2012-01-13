@@ -11,6 +11,7 @@
 (require 'flymake-jshint)
 (require 'js-beautify)
 (require 'my-yas-funs)
+(require 'erlang-start)
 
 (defun css-hooks ()
 	(autopair-mode 1)

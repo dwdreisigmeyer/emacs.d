@@ -4,25 +4,50 @@
 ;	yas/snippets/table-hash -> yas/table-hash
 ;	yas/snippets/table-templates -> yas/table-templates
 (require 'anything-c-yasnippet)
-	
-;-------------------------------------------------------------------------------------------
-; These are from:
-;	http://www.emacswiki.org/emacs/AnythingSources
-;-------------------------------------------------------------------------------------------
-	
-(defun load-anything-sources ()
-	(interactive)
-	(setq anything-sources
-		'(	anything-c-source-bookmarks ; install bookmarks+ from marmalade
-			anything-c-source-bookmark-set
-			anything-c-source-browse-code
-			anything-c-source-emacs-functions
-			anything-c-source-etags-select
-			anything-c-source-extended-command-history
-			anything-c-source-files-in-current-dir+
-			anything-c-source-locate
-			anything-c-source-traverse-occur
-			anything-c-source-yasnippet)))
 
-                            
+
+(global-set-key (kbd "C-x b")
+  (lambda() (interactive)
+    (anything
+     :prompt "Switch to: "
+     :sources
+     '( anything-c-source-buffers))))
+     	
+(global-set-key (kbd "C-x f")
+  (lambda() (interactive)
+    (anything
+     :prompt "Switch to: "
+     :sources
+     '( anything-c-source-recentf
+        anything-c-source-find-files
+        anything-c-source-write-file
+        anything-c-source-insert-file
+        anything-c-source-copy-files)))) 
+               
+     	
+(global-set-key (kbd "M-? c")
+  (lambda() (interactive)
+    (anything
+     :prompt "Switch to: "
+     :sources
+     '( anything-c-source-emacs-functions
+     	anything-c-source-extended-command-history))))
+             
+(global-set-key (kbd "M-? m")
+  (lambda() (interactive)
+    (anything
+     :prompt "Switch to: "
+     :sources
+     '( anything-c-source-bookmarks
+     	anything-c-source-bookmark-set
+     	anything-c-source-etags-select
+     	anything-c-source-traverse-occur))))
+     
+(global-set-key (kbd "M-? y")
+  (lambda() (interactive)
+    (anything
+     :prompt "Switch to: "
+     :sources
+     '( anything-c-source-yasnippet))))
+                        
 (provide 'anything-sources)

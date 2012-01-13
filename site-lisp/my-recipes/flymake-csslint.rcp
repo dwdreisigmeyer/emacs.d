@@ -1,0 +1,4 @@
+(:name "flymake-csslint"
+       :description "Making flymake work with CSSLint."
+       :type git
+       :url "https://github.com/arnested/flymake-csslint")

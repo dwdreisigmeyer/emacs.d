@@ -1,0 +1,4 @@
+(:name "yasnippet"
+       :description "YASnippet is a template system for Emacs."
+       :type git
+       :url "https://github.com/capitaomorte/yasnippet")

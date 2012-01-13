@@ -1,0 +1,6 @@
+(:name php-mode
+       :description "Major mode for editing PHP code"
+       :type git
+       :url "https://github.com/ejmr/php-mode"
+       :features php-mode)
+

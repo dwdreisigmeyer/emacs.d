@@ -1,0 +1,3 @@
+(:name idomenu
+	:type emacsmirror
+	:description "This package provides the `idomenu' command for selecting an imenu tag using ido completion.")
